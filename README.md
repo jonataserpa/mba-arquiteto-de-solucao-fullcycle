@@ -1,0 +1,32 @@
+## MBA em Arquitetura Full Cycle
+
+![MBA](https://cdn.discordapp.com/attachments/1083115321935798314/1183859962254987374/image.png?ex=6589de82&is=65776982&hm=828367931a8f1b6f15d88aab2b2baa94f798693122c4adb7905699c4d9f8c910&)
+
+## Arquitetura de Soluções
+
+![MBA](https://cdn.discordapp.com/attachments/1083115321935798314/1183860744303935638/image.png?ex=6589df3c&is=65776a3c&hm=34e25de2f3737b2335242cd75be4107f158bafc10ec94f2491e96e70a8af5144&)
+
+![MBA](https://cdn.discordapp.com/attachments/1083115321935798314/1183860854547034294/image.png?ex=6589df56&is=65776a56&hm=eb835eb36dd3385103ae8c74c727a7a9158bda49eade039318d0d430479d3644&)
+
+![MBA](https://cdn.discordapp.com/attachments/1083115321935798314/1183860957223604284/image.png?ex=6589df6f&is=65776a6f&hm=868655a1362f2f98bb537b7aa1bead2dfb70d0ec14e0476304989ebc78c7e1ad&)
+
+## Arquitetura de Software
+
+![MBA](https://cdn.discordapp.com/attachments/1083115321935798314/1183861624222781470/image.png?ex=6589e00e&is=65776b0e&hm=26e8f3c970f910a346f6f56c111996e3e227434ad539db20c6fc6f9643bdbb59&)
+
+![MBA](https://cdn.discordapp.com/attachments/1083115321935798314/1183861720435937320/image.png?ex=6589e025&is=65776b25&hm=dc5a0cd93d6b1fef45307bdb3e6298343622dd82e5664e3a34d62bd881a2e69b&)
+
+![MBA](https://cdn.discordapp.com/attachments/1083115321935798314/1183862030655029248/image.png?ex=6589e06f&is=65776b6f&hm=6f1524603089ae63625267a013df24d3191e0bec3cae15869a315ec27d097048&)
+
+
+## DevOps e SRE
+
+![MBA](https://cdn.discordapp.com/attachments/1083115321935798314/1183862218014597190/image.png?ex=6589e09b&is=65776b9b&hm=f6893a58a8cac37a62ea4d385f1da59f62cc44236bc72485139d328cd4121c97&)
+
+![MBA](https://cdn.discordapp.com/attachments/1083115321935798314/1183862339469070356/image.png?ex=6589e0b8&is=65776bb8&hm=b4f21543d59b86509769937d496ae7795ca35855489fd319ccef276bce38bdaf&)
+
+## Soft Skills
+
+![MBA](https://cdn.discordapp.com/attachments/1083115321935798314/1183862571300818964/image.png?ex=6589e0f0&is=65776bf0&hm=87627c57be4bb61a98abcd169bf1b5f374b82a7b9f7630815283dbca041bfbee&)
+
+![MBA](https://cdn.discordapp.com/attachments/1083115321935798314/1183862670387052584/image.png?ex=6589e107&is=65776c07&hm=889ca9c9ae01cb4c07f1a095717f924ae79f0d28147a5158e243304701b9ef76&)
