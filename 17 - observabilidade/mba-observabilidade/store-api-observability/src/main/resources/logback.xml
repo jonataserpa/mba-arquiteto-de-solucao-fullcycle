@@ -1,0 +1,152 @@
+<configuration>
+    <import class="ch.qos.logback.core.ConsoleAppender" />
+    <import class="ch.qos.logback.core.FileAppender" />
+    <import class="ch.qos.logback.classic.encoder.PatternLayoutEncoder" />
+    <import class="ch.qos.logback.classic.PatternLayout" />
+    <import class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder" />
+    <import class="net.logstash.logback.layout.LogstashLayout" />
+    <import class="com.internetitem.logback.elasticsearch.ElasticsearchAppender" />
+    <import class="com.splunk.logging.HttpEventCollectorLogbackAppender" />
+
+    <appender name="file" class="FileAppender">
+        <file>logs/application.log</file>
+        <encoder>
+            <pattern>
+                %d{HH:mm:ss.SSSZZ} [%thread] %-5level %X{traceId} %X{host} %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="stdout_plain" class="ConsoleAppender">
+        <encoder class="PatternLayoutEncoder">
+            <pattern>
+                %d{HH:mm:ss.SSSZZ} [%thread] %-5level %X{traceId} %X{host} %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="stdout_json" class="ConsoleAppender">
+        <encoder class="LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <fieldName>ts</fieldName>
+                    <timeZone>UTC</timeZone>
+                </timestamp>
+                <loggerName>
+                    <fieldName>logger</fieldName>
+                </loggerName>
+                <logLevel>
+                    <fieldName>level</fieldName>
+                </logLevel>
+                <callerData>
+                    <classFieldName>class</classFieldName>
+                    <methodFieldName>method</methodFieldName>
+                    <lineFieldName>line</lineFieldName>
+                    <fileFieldName>file</fileFieldName>
+                </callerData>
+                <threadName>
+                    <fieldName>thread</fieldName>
+                </threadName>
+                <mdc />
+                <stackTrace>
+                    <fieldName>stack</fieldName>
+                </stackTrace>
+                <message>
+                    <fieldName>msg</fieldName>
+                </message>
+
+                <!-- allow getting method arguments  -->
+                <arguments>
+                    <includeNonStructuredArguments>true</includeNonStructuredArguments>
+                    <nonStructuredArgumentsFieldPrefix>argument:</nonStructuredArgumentsFieldPrefix>
+                </arguments>
+            </providers>
+        </encoder>
+    </appender>
+
+    <appender name="elastic" class="ElasticsearchAppender">
+        <url>https://localhost:9200</url>
+        <index>logs-%date{yyyy-MM-dd}</index>
+        <type>tester</type>
+        <loggerName>es-logger</loggerName> <!-- optional -->
+        <errorLoggerName>es-error-logger</errorLoggerName> <!-- optional -->
+        <connectTimeout>30000</connectTimeout> <!-- optional (in ms, default 30000) -->
+        <errorsToStderr>false</errorsToStderr> <!-- optional (default false) -->
+        <includeCallerData>false</includeCallerData> <!-- optional (default false) -->
+        <logsToStderr>false</logsToStderr> <!-- optional (default false) -->
+        <maxQueueSize>104857600</maxQueueSize> <!-- optional (default 104857600) -->
+        <maxRetries>3</maxRetries> <!-- optional (default 3) -->
+        <readTimeout>30000</readTimeout> <!-- optional (in ms, default 30000) -->
+        <sleepTime>250</sleepTime> <!-- optional (in ms, default 250) -->
+        <rawJsonMessage>false</rawJsonMessage> <!-- optional (default false) -->
+        <includeMdc>true</includeMdc> <!-- optional (default false) -->
+        <maxMessageSize>100</maxMessageSize> <!-- optional (default -1 -->
+        <authentication class="com.internetitem.logback.elasticsearch.config.BasicAuthentication" /> <!-- optional -->
+        <properties>
+            <property>
+                <name>host</name>
+                <value>localhost</value>
+                <allowEmpty>false</allowEmpty>
+            </property>
+            <property>
+                <name>severity</name>
+                <value>%level</value>
+            </property>
+            <property>
+                <name>thread</name>
+                <value>%thread</value>
+            </property>
+            <property>
+                <name>stacktrace</name>
+                <value>%ex</value>
+            </property>
+            <property>
+                <name>logger</name>
+                <value>%logger</value>
+            </property>
+        </properties>
+        <headers>
+            <header>
+                <name>Content-Type</name>
+                <value>application/json</value>
+            </header>
+        </headers>
+    </appender>
+
+    <appender name="splunk_http" class="HttpEventCollectorLogbackAppender">
+        <url>http://localhost:8088</url>
+        <token>09d51214-0e39-45ff-a00f-882b4431eb9d</token>
+        <index>logs_storeapi_local</index>
+        <sourcetype>logback</sourcetype>
+        <messageFormat>text</messageFormat>
+        <middleware>HttpEventCollectorUnitTestMiddleware</middleware>
+        <connectTimeout>5000</connectTimeout>
+        <terminationTimeout>2000</terminationTimeout>
+        <layout class="LogstashLayout" />
+    </appender>
+
+    <logger name="es-logger" level="INFO" additivity="false">
+        <appender name="ES_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <!-- ... -->
+            <encoder>
+                <pattern>%msg</pattern>
+                <!-- This pattern is important, otherwise it won't be the raw Elasticsearch format anyomre -->
+            </encoder>
+        </appender>
+    </logger>
+    <logger name="ch.qos.logback" level="WARN" />
+    <logger name="org.mortbay.log" level="WARN" />
+    <logger name="org.springframework" level="INFO" />
+    <logger name="org.springframework.beans" level="WARN" />
+
+    <!-- enable DEBUG only for the application -->
+    <logger name="store" level="DEBUG" />
+
+    <root level="INFO">
+        <!--<appender-ref ref="stdout_json" />-->
+        <appender-ref ref="stdout_plain" />
+        <!--<appender-ref ref="splunk_http" />-->
+        <!--<appender-ref ref="elastic" />-->
+        <!--<appender-ref ref="FILE" />-->
+    </root>
+</configuration>

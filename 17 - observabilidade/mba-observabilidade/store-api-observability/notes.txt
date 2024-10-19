@@ -1,0 +1,20 @@
+links
+* logback documentation: https://logback.qos.ch/manual/layouts.html
+* logback implementation: https://betterstack.com/community/guides/logging/java/logback/
+
+logback pattern: all MDC values
+%d{HH:mm:ss.SSSZZ} [%thread] %-5level %X %logger{36} - %msg%n
+
+logback pattern: specific MDC values
+%d{HH:mm:ss.SSSZZ} [%thread] %-5level %X{traceId} %X{host} %logger{36} - %msg%n
+
+docker commands
+* docker-compose down -v
+* docker compose build api --no-cache
+* docker compose up -d
+
+install log driver plugin
+* docker plugin install elastic/elastic-logging-plugin:8.7.1
+
+queries Kibana:
+appName = store and appVersion = 0.0.1* and traceId = 9afd6b7-14c6-4306-9ed5-13c8a931acf9

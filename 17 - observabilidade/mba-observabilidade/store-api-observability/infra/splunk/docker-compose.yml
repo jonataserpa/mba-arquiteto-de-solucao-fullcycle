@@ -1,0 +1,36 @@
+services:
+  splunk-volume-permission:
+    image: splunk/splunk:latest
+    user: "root"
+    group_add:
+      - 'splunk'
+    volumes:
+      - splunk-etc:/opt/splunk/etc
+      - splunk-var:/opt/splunk/var
+    command: >
+      chown -R splunk:splunk /opt/splunk/etc
+      chown -R splunk:splunk /opt/splunk/var
+
+  splunk:
+    image: splunk/splunk:latest
+    hostname: splunk
+    environment:
+      SPLUNK_START_ARGS: --accept-license --no-prompt --answer-yes
+      SPLUNK_USERNAME: admin
+      SPLUNK_PASSWORD: 123456789
+      SPLUNK_ENABLE_LISTEN: 9997
+      SPLUNK_ADD: tcp 15140
+    volumes:
+      - splunk-etc:/opt/splunk/etc
+      - splunk-var:/opt/splunk/var
+    ports:
+      - "8000:8000"
+      - "9997:9997"
+      - "8088:8088"
+      - "1514:1514"
+      - "8089:8089"
+    depends_on:
+      - splunk-volume-permission
+volumes:
+  splunk-etc:
+  splunk-var:

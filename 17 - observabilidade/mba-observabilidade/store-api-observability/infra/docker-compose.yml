@@ -1,0 +1,59 @@
+services:
+
+  db:
+    container_name: db
+    image: postgres
+    restart: unless-stopped
+    env_file:
+      - ./pg/posgresql.env
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    ports:
+      - 25432:5432/tcp
+
+  products:
+    container_name: products
+    restart: unless-stopped
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    env_file:
+      - ./pg/posgresql.env
+    environment:
+      SPRING_PROFILES_ACTIVE: product
+      SPRING_APPLICATION_NAME: store-products-api
+      DB_HOST: db
+      DB_PORT: 5432
+      MANAGEMENT_OTLP_TRACING_ENDPOINT: http://host.docker.internal:4318/v1/traces
+      MANAGEMENT_TRACING_SAMPLING_PROBABILITY: 1.0
+    ports:
+      - 8081:8080
+    depends_on:
+      - db
+
+  orders:
+    container_name: orders
+    restart: unless-stopped
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    env_file:
+      - ./pg/posgresql.env
+    environment:
+      SPRING_PROFILES_ACTIVE: order
+      SPRING_APPLICATION_NAME: store-orders-api
+      DB_HOST: db
+      DB_PORT: 5432
+      MANAGEMENT_OTLP_TRACING_ENDPOINT: http://host.docker.internal:4318/v1/traces
+      MANAGEMENT_TRACING_SAMPLING_PROBABILITY: 1.0
+      API_PRODUCTS_ENDPOINT_URL: http://products:8080/products
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+      - products
+
+
+volumes:
+  pg-data:
+    name: postgres-container_pgdata
